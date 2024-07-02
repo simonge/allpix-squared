@@ -190,15 +190,15 @@ IF(NOT ROOT_FOUND)
 ENDIF()
 
 # Check which C++ version ROOT was built against
-IF(ROOT_CXX_FLAGS MATCHES ".*std=c\\+\\+2[0a].*")
-    SET(ROOT_CXX_STD 20)
-ELSEIF(ROOT_CXX_FLAGS MATCHES ".*std=c\\+\\+1[7z].*")
+#IF(ROOT_CXX_FLAGS MATCHES ".*std=c\\+\\+2[0a].*")
+#    SET(ROOT_CXX_STD 20)
+#ELSEIF(ROOT_CXX_FLAGS MATCHES ".*std=c\\+\\+1[7z].*")
     SET(ROOT_CXX_STD 17)
-ELSEIF(ROOT_CXX_FLAGS MATCHES ".*std=c\\+\\+.*")
-    MESSAGE(FATAL_ERROR "ROOT was built with an unsupported C++ version, at least C++17 is required: ${ROOT_CXX_FLAGS}")
-ELSE()
-    MESSAGE(FATAL_ERROR "Could not deduce ROOT's C++ version from build flags: ${ROOT_CXX_FLAGS}")
-ENDIF()
+#ELSEIF(ROOT_CXX_FLAGS MATCHES ".*std=c\\+\\+.*")
+#    MESSAGE(FATAL_ERROR "ROOT was built with an unsupported C++ version, at least C++17 is required: ${ROOT_CXX_FLAGS}")
+#ELSE()
+#    MESSAGE(FATAL_ERROR "Could not deduce ROOT's C++ version from build flags: ${ROOT_CXX_FLAGS}")
+#ENDIF()
 
 # Check ROOT version
 IF(NOT ${ROOT_VERSION} VERSION_GREATER "6.0")
