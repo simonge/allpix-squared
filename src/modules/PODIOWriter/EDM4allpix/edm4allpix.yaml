@@ -1,0 +1,55 @@
+# Some datatypes based on EDM4hep. EDM4hep license applies to those sections.
+---
+schema_version: 1
+options :
+  # should getters / setters be prefixed with get / set?
+  getSyntax: True
+  # should POD members be exposed with getters/setters in classes that have them as members?
+  exposePODMembers: False
+  includeSubfolder: True
+
+components:
+  edm4allpix::Pixel:
+    Description: "Pixel in a sensor"
+    Members:
+      - edm4hep::Vector3d      localPosition    // Position of the pixel [mm]
+      - edm4hep::Vector3d      globalPosition   // Global position of the pixel [mm]
+      - edm4hep::Vector2f      size             // Size of the pixel [mm]
+
+datatypes:
+
+  edm4allpix::PixelCharge:
+    Description: "Charge deposited in a pixel"
+    Author: "S.Gardner"
+    Members:
+      - edm4allpix::Pixel      pixel             // The pixel
+      - int32_t                charge            // ADC value
+      - double                 localTime         // Time of arrival of the charge [ns]
+      - double                 globalTime        // Time of arrival of the charge [ns]
+    OneToManyRelations:
+      - edm4allpix::PropagatedCharge propagatedCharges // Propagated charges to this pixel
+    OneToOneRelations:
+      - edm4hep::RawTimeSeries pulse             // Pulse
+
+  edm4allpix::PropagatedCharge:
+    Description: "Charge propagated to a pixel"
+    Author: "S.Gardner"
+    Members:
+      - edm4hep::Vector3d      local_position          // Position of the charge [mm]
+      - edm4hep::Vector3d      global_position         // Position of the charge [mm]
+      - int32_t                 type                    // Type of the carrier to propagate
+
+  edm4allpix::PixelHit:
+    Description: "Digitized hit in a pixel"
+    Author: "S.Gardner"
+    Members:
+      - edm4allpix::Pixel      pixel             // The pixel
+      - double                 localTime         // Time of arrival of the charge [digitized]
+      - double                 globalTime        // Time of arrival of the charge [digitized]
+      - double                 signal            // Energy deposited in the pixel [digitized]
+    OneToOneRelations:
+      - edm4allpix::PixelCharge charge           // Charge deposited in the pixel
+    OneToManyRelations:
+      - edm4hep::MCParticle     mcParticles      // MC particles contributing to the hit
+      
+
